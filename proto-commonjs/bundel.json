@@ -1,0 +1,1932 @@
+{
+  "nested": {
+    "cloud": {
+      "nested": {
+        "CloudConfigStatus": {
+          "values": {
+            "Success": 0,
+            "InvalidParam": 1,
+            "InvalidState": 2
+          }
+        },
+        "CmdGetSetDetails": {
+          "fields": {
+            "UserID": {
+              "type": "string",
+              "id": 1
+            },
+            "SecretKey": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "RespGetSetDetails": {
+          "fields": {
+            "Status": {
+              "type": "CloudConfigStatus",
+              "id": 1
+            },
+            "DeviceSecret": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "CloudConfigMsgType": {
+          "values": {
+            "TypeCmdGetSetDetails": 0,
+            "TypeRespGetSetDetails": 1
+          }
+        },
+        "CloudConfigPayload": {
+          "oneofs": {
+            "payload": {
+              "oneof": [
+                "cmdGetSetDetails",
+                "respGetSetDetails"
+              ]
+            }
+          },
+          "fields": {
+            "msg": {
+              "type": "CloudConfigMsgType",
+              "id": 1
+            },
+            "cmdGetSetDetails": {
+              "type": "CmdGetSetDetails",
+              "id": 10
+            },
+            "respGetSetDetails": {
+              "type": "RespGetSetDetails",
+              "id": 11
+            }
+          }
+        }
+      }
+    },
+    "espressif": {
+      "nested": {
+        "Status": {
+          "values": {
+            "Success": 0,
+            "InvalidSecScheme": 1,
+            "InvalidProto": 2,
+            "TooManySessions": 3,
+            "InvalidArgument": 4,
+            "InternalError": 5,
+            "CryptoError": 6,
+            "InvalidSession": 7
+          }
+        },
+        "S0SessionCmd": {
+          "fields": {}
+        },
+        "S0SessionResp": {
+          "fields": {
+            "status": {
+              "type": "Status",
+              "id": 1
+            }
+          }
+        },
+        "Sec0MsgType": {
+          "values": {
+            "S0_Session_Command": 0,
+            "S0_Session_Response": 1
+          }
+        },
+        "Sec0Payload": {
+          "oneofs": {
+            "payload": {
+              "oneof": [
+                "sc",
+                "sr"
+              ]
+            }
+          },
+          "fields": {
+            "msg": {
+              "type": "Sec0MsgType",
+              "id": 1
+            },
+            "sc": {
+              "type": "S0SessionCmd",
+              "id": 20
+            },
+            "sr": {
+              "type": "S0SessionResp",
+              "id": 21
+            }
+          }
+        },
+        "SessionCmd1": {
+          "fields": {
+            "clientVerifyData": {
+              "type": "bytes",
+              "id": 2
+            }
+          }
+        },
+        "SessionResp1": {
+          "fields": {
+            "status": {
+              "type": "Status",
+              "id": 1
+            },
+            "deviceVerifyData": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "SessionCmd0": {
+          "fields": {
+            "clientPubkey": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "SessionResp0": {
+          "fields": {
+            "status": {
+              "type": "Status",
+              "id": 1
+            },
+            "devicePubkey": {
+              "type": "bytes",
+              "id": 2
+            },
+            "deviceRandom": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "Sec1MsgType": {
+          "values": {
+            "Session_Command0": 0,
+            "Session_Response0": 1,
+            "Session_Command1": 2,
+            "Session_Response1": 3
+          }
+        },
+        "Sec1Payload": {
+          "oneofs": {
+            "payload": {
+              "oneof": [
+                "sc0",
+                "sr0",
+                "sc1",
+                "sr1"
+              ]
+            }
+          },
+          "fields": {
+            "msg": {
+              "type": "Sec1MsgType",
+              "id": 1
+            },
+            "sc0": {
+              "type": "SessionCmd0",
+              "id": 20
+            },
+            "sr0": {
+              "type": "SessionResp0",
+              "id": 21
+            },
+            "sc1": {
+              "type": "SessionCmd1",
+              "id": 22
+            },
+            "sr1": {
+              "type": "SessionResp1",
+              "id": 23
+            }
+          }
+        },
+        "SecSchemeVersion": {
+          "values": {
+            "SecScheme0": 0,
+            "SecScheme1": 1
+          }
+        },
+        "SessionData": {
+          "oneofs": {
+            "proto": {
+              "oneof": [
+                "sec0",
+                "sec1"
+              ]
+            }
+          },
+          "fields": {
+            "secVer": {
+              "type": "SecSchemeVersion",
+              "id": 2
+            },
+            "sec0": {
+              "type": "Sec0Payload",
+              "id": 10
+            },
+            "sec1": {
+              "type": "Sec1Payload",
+              "id": 11
+            }
+          }
+        },
+        "CmdGetStatus": {
+          "fields": {}
+        },
+        "RespGetStatus": {
+          "oneofs": {
+            "state": {
+              "oneof": [
+                "failReason",
+                "connected"
+              ]
+            }
+          },
+          "fields": {
+            "status": {
+              "type": "Status",
+              "id": 1
+            },
+            "staState": {
+              "type": "WifiStationState",
+              "id": 2
+            },
+            "failReason": {
+              "type": "WifiConnectFailedReason",
+              "id": 10
+            },
+            "connected": {
+              "type": "WifiConnectedState",
+              "id": 11
+            }
+          }
+        },
+        "CmdSetConfig": {
+          "fields": {
+            "ssid": {
+              "type": "bytes",
+              "id": 1
+            },
+            "passphrase": {
+              "type": "bytes",
+              "id": 2
+            },
+            "bssid": {
+              "type": "bytes",
+              "id": 3
+            },
+            "channel": {
+              "type": "int32",
+              "id": 4
+            }
+          }
+        },
+        "RespSetConfig": {
+          "fields": {
+            "status": {
+              "type": "Status",
+              "id": 1
+            }
+          }
+        },
+        "CmdApplyConfig": {
+          "fields": {}
+        },
+        "RespApplyConfig": {
+          "fields": {
+            "status": {
+              "type": "Status",
+              "id": 1
+            }
+          }
+        },
+        "WiFiConfigMsgType": {
+          "values": {
+            "TypeCmdGetStatus": 0,
+            "TypeRespGetStatus": 1,
+            "TypeCmdSetConfig": 2,
+            "TypeRespSetConfig": 3,
+            "TypeCmdApplyConfig": 4,
+            "TypeRespApplyConfig": 5
+          }
+        },
+        "WiFiConfigPayload": {
+          "oneofs": {
+            "payload": {
+              "oneof": [
+                "cmdGetStatus",
+                "respGetStatus",
+                "cmdSetConfig",
+                "respSetConfig",
+                "cmdApplyConfig",
+                "respApplyConfig"
+              ]
+            }
+          },
+          "fields": {
+            "msg": {
+              "type": "WiFiConfigMsgType",
+              "id": 1
+            },
+            "cmdGetStatus": {
+              "type": "CmdGetStatus",
+              "id": 10
+            },
+            "respGetStatus": {
+              "type": "RespGetStatus",
+              "id": 11
+            },
+            "cmdSetConfig": {
+              "type": "CmdSetConfig",
+              "id": 12
+            },
+            "respSetConfig": {
+              "type": "RespSetConfig",
+              "id": 13
+            },
+            "cmdApplyConfig": {
+              "type": "CmdApplyConfig",
+              "id": 14
+            },
+            "respApplyConfig": {
+              "type": "RespApplyConfig",
+              "id": 15
+            }
+          }
+        },
+        "WifiStationState": {
+          "values": {
+            "Connected": 0,
+            "Connecting": 1,
+            "Disconnected": 2,
+            "ConnectionFailed": 3
+          }
+        },
+        "WifiConnectFailedReason": {
+          "values": {
+            "AuthError": 0,
+            "NetworkNotFound": 1
+          }
+        },
+        "WifiAuthMode": {
+          "values": {
+            "Open": 0,
+            "WEP": 1,
+            "WPA_PSK": 2,
+            "WPA2_PSK": 3,
+            "WPA_WPA2_PSK": 4,
+            "WPA2_ENTERPRISE": 5
+          }
+        },
+        "WifiConnectedState": {
+          "fields": {
+            "ip4Addr": {
+              "type": "string",
+              "id": 1
+            },
+            "authMode": {
+              "type": "WifiAuthMode",
+              "id": 2
+            },
+            "ssid": {
+              "type": "bytes",
+              "id": 3
+            },
+            "bssid": {
+              "type": "bytes",
+              "id": 4
+            },
+            "channel": {
+              "type": "int32",
+              "id": 5
+            }
+          }
+        },
+        "CmdScanStart": {
+          "fields": {
+            "blocking": {
+              "type": "bool",
+              "id": 1
+            },
+            "passive": {
+              "type": "bool",
+              "id": 2
+            },
+            "groupChannels": {
+              "type": "uint32",
+              "id": 3
+            },
+            "periodMs": {
+              "type": "uint32",
+              "id": 4
+            }
+          }
+        },
+        "RespScanStart": {
+          "fields": {}
+        },
+        "CmdScanStatus": {
+          "fields": {}
+        },
+        "RespScanStatus": {
+          "fields": {
+            "scanFinished": {
+              "type": "bool",
+              "id": 1
+            },
+            "resultCount": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "CmdScanResult": {
+          "fields": {
+            "startIndex": {
+              "type": "uint32",
+              "id": 1
+            },
+            "count": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "WiFiScanResult": {
+          "fields": {
+            "ssid": {
+              "type": "bytes",
+              "id": 1
+            },
+            "channel": {
+              "type": "uint32",
+              "id": 2
+            },
+            "rssi": {
+              "type": "int32",
+              "id": 3
+            },
+            "bssid": {
+              "type": "bytes",
+              "id": 4
+            },
+            "auth": {
+              "type": "WifiAuthMode",
+              "id": 5
+            }
+          }
+        },
+        "RespScanResult": {
+          "fields": {
+            "entries": {
+              "rule": "repeated",
+              "type": "WiFiScanResult",
+              "id": 1
+            }
+          }
+        },
+        "WiFiScanMsgType": {
+          "values": {
+            "TypeCmdScanStart": 0,
+            "TypeRespScanStart": 1,
+            "TypeCmdScanStatus": 2,
+            "TypeRespScanStatus": 3,
+            "TypeCmdScanResult": 4,
+            "TypeRespScanResult": 5
+          }
+        },
+        "WiFiScanPayload": {
+          "oneofs": {
+            "payload": {
+              "oneof": [
+                "cmdScanStart",
+                "respScanStart",
+                "cmdScanStatus",
+                "respScanStatus",
+                "cmdScanResult",
+                "respScanResult"
+              ]
+            }
+          },
+          "fields": {
+            "msg": {
+              "type": "WiFiScanMsgType",
+              "id": 1
+            },
+            "status": {
+              "type": "Status",
+              "id": 2
+            },
+            "cmdScanStart": {
+              "type": "CmdScanStart",
+              "id": 10
+            },
+            "respScanStart": {
+              "type": "RespScanStart",
+              "id": 11
+            },
+            "cmdScanStatus": {
+              "type": "CmdScanStatus",
+              "id": 12
+            },
+            "respScanStatus": {
+              "type": "RespScanStatus",
+              "id": 13
+            },
+            "cmdScanResult": {
+              "type": "CmdScanResult",
+              "id": 14
+            },
+            "respScanResult": {
+              "type": "RespScanResult",
+              "id": 15
+            }
+          }
+        }
+      }
+    },
+    "hdyRpc": {
+      "nested": {
+        "ResultCodes": {
+          "values": {
+            "RESULT_UNKNOWN": 0,
+            "RESULT_OK": 1,
+            "RESULT_OK_ALREADY_SET": 2,
+            "RESULT_ERR_GENERIC": -1,
+            "RESULT_ERR_NO_MEMORY": -2,
+            "RESULT_ERR_INVALID_ARG": -3,
+            "RESULT_ERR_INVALID_STATE": -4,
+            "RESULT_ERR_INVALID_SIZE": -5,
+            "RESULT_ERR_NOT_FOUND": -6,
+            "RESULT_ERR_NOT_SUPPORTED": -7,
+            "RESULT_ERR_TIMEOUT": -8,
+            "RESULT_ERR_INVALID_RESPONSE": -9
+          }
+        },
+        "Modes": {
+          "values": {
+            "MODE_HAMP": 0,
+            "MODE_HDSP": 1,
+            "MODE_HSSP": 2,
+            "MODE_MAINTENANCE": 3
+          }
+        },
+        "HampStates": {
+          "values": {
+            "HAMP_STATE_STOPPED": 0,
+            "HAMP_STATE_RUNNING": 1
+          }
+        },
+        "RequestCmdGetServerTime": {
+          "fields": {}
+        },
+        "ResponseCmdGetServerTime": {
+          "fields": {
+            "time": {
+              "type": "uint64",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdWsHandshake": {
+          "fields": {
+            "test": {
+              "type": "string",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdWsHandshake": {
+          "fields": {
+            "testResult": {
+              "type": "string",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdGenerateConnectionKey": {
+          "fields": {
+            "length": {
+              "type": "uint32",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdGenerateConnectionKey": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "key": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdSetConnectionKey": {
+          "fields": {
+            "key": {
+              "type": "string",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdSetConnectionKey": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdGetMode": {
+          "fields": {}
+        },
+        "ResponseCmdGetMode": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "mode": {
+              "type": "Modes",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdSetMode": {
+          "fields": {
+            "mode": {
+              "type": "Modes",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdSetMode": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdGetConnected": {
+          "fields": {}
+        },
+        "ResponseCmdGetConnected": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "connected": {
+              "type": "bool",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdGetInfo": {
+          "fields": {}
+        },
+        "ResponseCmdGetInfo": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "info": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdGetSettings": {
+          "fields": {}
+        },
+        "ResponseCmdGetSettings": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "settings": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdGetStatus": {
+          "fields": {}
+        },
+        "ResponseCmdGetStatus": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "status": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdHampSetStart": {
+          "fields": {}
+        },
+        "ResponseCmdHampSetStart": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHampSetStop": {
+          "fields": {}
+        },
+        "ResponseCmdHampSetStop": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHampGetVelocity": {
+          "fields": {}
+        },
+        "ResponseCmdHampGetVelocity": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "velocity": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdHampSetVelocity": {
+          "fields": {
+            "velocity": {
+              "type": "float",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdHampSetVelocity": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHampGetState": {
+          "fields": {}
+        },
+        "ResponseCmdHampGetState": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "state": {
+              "type": "HampStates",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdHdspSetXaVa": {
+          "fields": {
+            "x": {
+              "type": "float",
+              "id": 1
+            },
+            "v": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHdspSetXaVa": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHdspSetXpVa": {
+          "fields": {
+            "x": {
+              "type": "float",
+              "id": 1
+            },
+            "v": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHdspSetXpVa": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHdspSetXpVp": {
+          "fields": {
+            "x": {
+              "type": "float",
+              "id": 1
+            },
+            "v": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHdspSetXpVp": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHdspSetXaT": {
+          "fields": {
+            "x": {
+              "type": "float",
+              "id": 1
+            },
+            "t": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHdspSetXaT": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHdspSetXpT": {
+          "fields": {
+            "x": {
+              "type": "float",
+              "id": 1
+            },
+            "t": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHdspSetXpT": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHdspSetXaVp": {
+          "fields": {
+            "x": {
+              "type": "float",
+              "id": 1
+            },
+            "v": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHdspSetXaVp": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHstpGetTime": {
+          "fields": {
+            "time": {
+              "type": "uint64",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdHstpGetTime": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "time": {
+              "type": "uint64",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdHstpGetOffset": {
+          "fields": {
+            "offset": {
+              "type": "sint32",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdHstpGetOffset": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "offset": {
+              "type": "sint32",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdHstpSetOffset": {
+          "fields": {
+            "offset": {
+              "type": "sint32",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdHstpSetOffset": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdHstpGetRtd": {
+          "fields": {}
+        },
+        "ResponseCmdHstpGetRtd": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "rtd": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdHstpSetSync": {
+          "fields": {
+            "syncCount": {
+              "type": "uint32",
+              "id": 1
+            },
+            "outliers": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdHstpSetSync": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "time": {
+              "type": "uint64",
+              "id": 2
+            },
+            "rtd": {
+              "type": "uint32",
+              "id": 3
+            }
+          }
+        },
+        "RequestCmdMaintanceSetRestart": {
+          "fields": {
+            "reconnect": {
+              "type": "bool",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdMaintanceSetRestart": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdMaintanceSetUpdatePerform": {
+          "fields": {
+            "fwVersion": {
+              "type": "string",
+              "id": 1
+            }
+          }
+        },
+        "ResponseCmdMaintanceSetUpdatePerform": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdMaintanceGetUpdateStatus": {
+          "fields": {}
+        },
+        "ResponseCmdMaintanceGetUpdateStatus": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "percentComplete": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdOtaGetLatest": {
+          "fields": {}
+        },
+        "ResponseCmdOtaGetLatest": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "version": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdStrokeGetStroke": {
+          "fields": {}
+        },
+        "ResponseCmdStrokeGetStroke": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "min": {
+              "type": "uint32",
+              "id": 2
+            },
+            "max": {
+              "type": "uint32",
+              "id": 3
+            }
+          }
+        },
+        "RequestCmdStrokeSetStroke": {
+          "fields": {
+            "min": {
+              "type": "uint32",
+              "id": 1
+            },
+            "max": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "ResponseCmdStrokeSetStroke": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            }
+          }
+        },
+        "RequestCmdStrokeGetPositionAbsolute": {
+          "fields": {}
+        },
+        "ResponseCmdStrokeGetPositionAbsolute": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "position": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "RequestCmdStrokeGetPositionRelative": {
+          "fields": {}
+        },
+        "ResponseCmdStrokeGetPositionRelative": {
+          "fields": {
+            "result": {
+              "type": "ResultCodes",
+              "id": 1
+            },
+            "position": {
+              "type": "float",
+              "id": 2
+            }
+          }
+        },
+        "RequestMethods": {
+          "values": {
+            "REQUEST_METHOD_UNKNOWN": 0,
+            "REQUEST_METHOD_GET_SERVER_TIME": 300,
+            "REQUEST_METHOD_WS_HANDSHAKE": 500,
+            "REQUEST_METHOD_GENERATE_CONNECTION_KEY": 501,
+            "REQUEST_METHOD_SET_CONNECTION_KEY": 502,
+            "REQUEST_METHOD_GET_MODE": 700,
+            "REQUEST_METHOD_SET_MODE": 701,
+            "REQUEST_METHOD_GET_CONNECTED": 702,
+            "REQUEST_METHOD_GET_INFO": 703,
+            "REQUEST_METHOD_GET_SETTINGS": 704,
+            "REQUEST_METHOD_GET_STATUS": 705,
+            "REQUEST_METHOD_HAMP_SET_START": 720,
+            "REQUEST_METHOD_HAMP_SET_STOP": 721,
+            "REQUEST_METHOD_HAMP_GET_VELOCITY": 722,
+            "REQUEST_METHOD_HAMP_SET_VELOCITY": 723,
+            "REQUEST_METHOD_HAMP_GET_STATE": 724,
+            "REQUEST_METHOD_HDSP_SET_XAVA": 740,
+            "REQUEST_METHOD_HDSP_SET_XPVA": 741,
+            "REQUEST_METHOD_HDSP_SET_XPVP": 742,
+            "REQUEST_METHOD_HDSP_SET_XAT": 743,
+            "REQUEST_METHOD_HDSP_SET_XPT": 744,
+            "REQUEST_METHOD_HDSP_SET_XAVP": 745,
+            "REQUEST_METHOD_HSTP_GET_TIME": 780,
+            "REQUEST_METHOD_HSTP_GET_OFFSET": 781,
+            "REQUEST_METHOD_HSTP_SET_OFFSET": 782,
+            "REQUEST_METHOD_HSTP_GET_RTD": 783,
+            "REQUEST_METHOD_HSTP_SET_SYNC": 784,
+            "REQUEST_METHOD_MAINTENANCE_SET_RESTART": 800,
+            "REQUEST_METHOD_MAINTENANCE_SET_UPDATE_PERFORM": 801,
+            "REQUEST_METHOD_MAINTENANCE_SET_UPDATE_STATUS": 802,
+            "REQUEST_METHOD_OTA_GET_LATEST": 820,
+            "REQUEST_METHOD_STROKE_GET_STROKE": 840,
+            "REQUEST_METHOD_STROKE_SET_STROKE": 841,
+            "REQUEST_METHOD_STROKE_GET_STROKE_POSITION_ABSOLUTE": 842,
+            "REQUEST_METHOD_STROKE_GET_STROKE_POSITION_RELATIVE": 843
+          }
+        },
+        "Request": {
+          "oneofs": {
+            "params": {
+              "oneof": [
+                "requestCmdGetServerTime",
+                "requestCmdWsHandshake",
+                "requestCmdGenerateConnectionKey",
+                "requestCmdSetConnectionKey",
+                "requestCmdStrokeGetStroke"
+              ]
+            }
+          },
+          "fields": {
+            "method": {
+              "type": "RequestMethods",
+              "id": 1
+            },
+            "requestCmdGetServerTime": {
+              "type": "RequestCmdGetServerTime",
+              "id": 300
+            },
+            "requestCmdWsHandshake": {
+              "type": "RequestCmdWsHandshake",
+              "id": 500
+            },
+            "requestCmdGenerateConnectionKey": {
+              "type": "RequestCmdGenerateConnectionKey",
+              "id": 501
+            },
+            "requestCmdSetConnectionKey": {
+              "type": "RequestCmdSetConnectionKey",
+              "id": 502
+            },
+            "requestCmdStrokeGetStroke": {
+              "type": "RequestCmdStrokeGetStroke",
+              "id": 840
+            },
+            "id": {
+              "type": "uint32",
+              "id": 2
+            }
+          }
+        },
+        "Error": {
+          "fields": {
+            "code": {
+              "type": "uint32",
+              "id": 1
+            },
+            "message": {
+              "type": "string",
+              "id": 2
+            },
+            "data": {
+              "type": "string",
+              "id": 3
+            }
+          }
+        },
+        "Response": {
+          "oneofs": {
+            "result": {
+              "oneof": [
+                "responseCmdGetServerTime",
+                "responseCmdWsHandshake",
+                "responseCmdGenerateConnectionKey",
+                "responseCmdSetConnectionKey",
+                "responseCmdStrokeGetStroke"
+              ]
+            }
+          },
+          "fields": {
+            "id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "responseCmdGetServerTime": {
+              "type": "ResponseCmdGetServerTime",
+              "id": 300
+            },
+            "responseCmdWsHandshake": {
+              "type": "ResponseCmdWsHandshake",
+              "id": 500
+            },
+            "responseCmdGenerateConnectionKey": {
+              "type": "ResponseCmdGenerateConnectionKey",
+              "id": 501
+            },
+            "responseCmdSetConnectionKey": {
+              "type": "ResponseCmdSetConnectionKey",
+              "id": 502
+            },
+            "responseCmdStrokeGetStroke": {
+              "type": "ResponseCmdStrokeGetStroke",
+              "id": 840
+            },
+            "error": {
+              "type": "Error",
+              "id": 2
+            }
+          }
+        },
+        "MessageType": {
+          "values": {
+            "MESSAGE_TYPE_UNKNOWN": 0,
+            "MESSAGE_TYPE_REQUEST": 1,
+            "MESSAGE_TYPE_RESPONSE": 2
+          }
+        },
+        "RpcMessage": {
+          "oneofs": {
+            "message": {
+              "oneof": [
+                "request",
+                "response"
+              ]
+            }
+          },
+          "fields": {
+            "type": {
+              "type": "MessageType",
+              "id": 1
+            },
+            "request": {
+              "type": "Request",
+              "id": 2
+            },
+            "response": {
+              "type": "Response",
+              "id": 3
+            }
+          }
+        }
+      }
+    },
+    "handyplug": {
+      "nested": {
+        "Ok": {
+          "fields": {
+            "Id": {
+              "type": "uint32",
+              "id": 1
+            }
+          }
+        },
+        "Error": {
+          "fields": {
+            "Id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "ErrorMessage": {
+              "type": "string",
+              "id": 2
+            },
+            "ErrorCode": {
+              "type": "int32",
+              "id": 3
+            }
+          }
+        },
+        "Ping": {
+          "fields": {
+            "Id": {
+              "type": "uint32",
+              "id": 1
+            }
+          }
+        },
+        "RequestServerInfo": {
+          "fields": {
+            "Id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "ClientName": {
+              "type": "string",
+              "id": 2
+            },
+            "MessageVersion": {
+              "type": "uint32",
+              "id": 3
+            }
+          }
+        },
+        "ServerInfo": {
+          "fields": {
+            "Id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "ServerName": {
+              "type": "string",
+              "id": 2
+            },
+            "MessageVersion": {
+              "type": "uint32",
+              "id": 3
+            },
+            "MaxPingTime": {
+              "type": "uint32",
+              "id": 4
+            }
+          }
+        },
+        "LinearCmd": {
+          "fields": {
+            "Id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "DeviceIndex": {
+              "type": "uint32",
+              "id": 2
+            },
+            "Vectors": {
+              "rule": "repeated",
+              "type": "Vector",
+              "id": 3
+            }
+          },
+          "nested": {
+            "Vector": {
+              "fields": {
+                "Index": {
+                  "type": "uint32",
+                  "id": 1
+                },
+                "Duration": {
+                  "type": "uint32",
+                  "id": 2
+                },
+                "Position": {
+                  "type": "double",
+                  "id": 3
+                }
+              }
+            }
+          }
+        },
+        "Message": {
+          "oneofs": {
+            "Message": {
+              "oneof": [
+                "Ok",
+                "Error",
+                "Ping",
+                "RequestServerInfo",
+                "ServerInfo",
+                "LinearCmd"
+              ]
+            }
+          },
+          "fields": {
+            "Ok": {
+              "type": "Ok",
+              "id": 100
+            },
+            "Error": {
+              "type": "Error",
+              "id": 101
+            },
+            "Ping": {
+              "type": "Ping",
+              "id": 102
+            },
+            "RequestServerInfo": {
+              "type": "RequestServerInfo",
+              "id": 200
+            },
+            "ServerInfo": {
+              "type": "ServerInfo",
+              "id": 201
+            },
+            "LinearCmd": {
+              "type": "LinearCmd",
+              "id": 403
+            }
+          }
+        },
+        "Payload": {
+          "fields": {
+            "Messages": {
+              "rule": "repeated",
+              "type": "Message",
+              "id": 1
+            }
+          }
+        }
+      }
+    },
+    "CmdProtocolVersionGet": {
+      "fields": {}
+    },
+    "RespProtocolVersionGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "semver": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdConnectionKeyGet": {
+      "fields": {}
+    },
+    "RespConnectionKeyGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "key": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdConnectionKeyGen": {
+      "fields": {
+        "length": {
+          "type": "uint32",
+          "id": 1
+        }
+      }
+    },
+    "RespConnectionKeyGen": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "key": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdSerialNumberGet": {
+      "fields": {}
+    },
+    "RespSerialNumberGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "serialNumber": {
+          "type": "uint32",
+          "id": 2
+        }
+      }
+    },
+    "CmdProductionDateGet": {
+      "fields": {}
+    },
+    "RespProductionDateGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "productionDate": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdHardwareVersionGet": {
+      "fields": {}
+    },
+    "RespHardwareVersionGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "hardwareVersion": {
+          "type": "uint32",
+          "id": 2
+        }
+      }
+    },
+    "CmdPcbaVersionGet": {
+      "fields": {}
+    },
+    "RespPcbaVersionGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "PcbaVersion": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdModelGet": {
+      "fields": {}
+    },
+    "RespModelGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "model": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdTermsSet": {
+      "fields": {
+        "termsBits": {
+          "type": "uint32",
+          "id": 1
+        }
+      }
+    },
+    "RespTermsSet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        }
+      }
+    },
+    "CmdTermsGet": {
+      "fields": {}
+    },
+    "RespTermsGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "termsBits": {
+          "type": "uint32",
+          "id": 2
+        }
+      }
+    },
+    "CmdFirmwareVersionGet": {
+      "fields": {}
+    },
+    "RespFirmwareVersionGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "semver": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdWifiStaMacGet": {
+      "fields": {}
+    },
+    "RespWifiStaMacGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "mac": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdWifiStaIpGet": {
+      "fields": {}
+    },
+    "RespWifiStaIpGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "ip": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "CmdPing": {
+      "fields": {}
+    },
+    "RespPing": {
+      "fields": {}
+    },
+    "CmdEIOConnect": {
+      "fields": {}
+    },
+    "RespEIOConnect": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        }
+      }
+    },
+    "CmdConfigWifiSsidGet": {
+      "fields": {}
+    },
+    "RespConfigWifiSsidGet": {
+      "fields": {
+        "result": {
+          "type": "int32",
+          "id": 1
+        },
+        "ssid": {
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "HdyMsgType": {
+      "values": {
+        "TypeCmdProtocolVersionGet": 0,
+        "TypeRespProtocolVersionGet": 1,
+        "TypeCmdConnectionKeyGet": 2,
+        "TypeRespConnectionKeyGet": 3,
+        "TypeCmdConnectionKeyGen": 6,
+        "TypeRespConnectionKeyGen": 7,
+        "TypeCmdSerialNumberGet": 8,
+        "TypeRespSerialNumberGet": 9,
+        "TypeCmdProductionDateGet": 10,
+        "TypeRespProductionDateGet": 11,
+        "TypeCmdHardwareVersionGet": 12,
+        "TypeRespHardwareVersionGet": 13,
+        "TypeCmdPcbaVersionGet": 14,
+        "TypeRespPcbaVersionGet": 15,
+        "TypeCmdModelGet": 16,
+        "TypeRespModelGet": 17,
+        "TypeCmdTermsSet": 18,
+        "TypeRespTermsSet": 19,
+        "TypeCmdTermsGet": 20,
+        "TypeRespTermsGet": 21,
+        "TypeCmdFirmwareVersionGet": 22,
+        "TypeRespFirmwareVersionGet": 23,
+        "TypeCmdWifiStaMacGet": 24,
+        "TypeRespWifiStaMacGet": 25,
+        "TypeCmdWifiStaIpGet": 26,
+        "TypeRespWifiStaIpGet": 27,
+        "TypeCmdPing": 28,
+        "TypeRespPing": 29,
+        "TypeCmdEIOConnect": 30,
+        "TypeRespEIOConnect": 31,
+        "TypeCmdConfigWifiSsidGet": 32,
+        "TypeRespConfigWifiSsidGet": 33
+      }
+    },
+    "HdyPayload": {
+      "oneofs": {
+        "payload": {
+          "oneof": [
+            "cmdProtocolVersionGet",
+            "respProtocolVersionGet",
+            "cmdConnectionKeyGet",
+            "respConnectionKeyGet",
+            "cmdConnectionKeyGen",
+            "respConnectionKeyGen",
+            "cmdSerialNumberGet",
+            "respSerialNumberGet",
+            "cmdProductionDateGet",
+            "respProductionDateGet",
+            "cmdHardwareVersionGet",
+            "respHardwareVersionGet",
+            "cmdPcbaVersionGet",
+            "respPcbaVersionGet",
+            "cmdModelGet",
+            "respModelGet",
+            "cmdTermsSet",
+            "respTermsSet",
+            "cmdTermsGet",
+            "respTermsGet",
+            "cmdFirmwareVersionGet",
+            "respFirmwareVersionGet",
+            "cmdWifiStaMacGet",
+            "respWifiStaMacGet",
+            "cmdWifiStaIpGet",
+            "respWifiStaIpGet",
+            "cmdPing",
+            "respPing",
+            "cmdEioConnect",
+            "respEioConnect",
+            "cmdConfigWifiSsidGet",
+            "respConfigWifiSsidGet"
+          ]
+        }
+      },
+      "fields": {
+        "msg": {
+          "type": "HdyMsgType",
+          "id": 1
+        },
+        "cmdProtocolVersionGet": {
+          "type": "CmdProtocolVersionGet",
+          "id": 100
+        },
+        "respProtocolVersionGet": {
+          "type": "RespProtocolVersionGet",
+          "id": 101
+        },
+        "cmdConnectionKeyGet": {
+          "type": "CmdConnectionKeyGet",
+          "id": 102
+        },
+        "respConnectionKeyGet": {
+          "type": "RespConnectionKeyGet",
+          "id": 103
+        },
+        "cmdConnectionKeyGen": {
+          "type": "CmdConnectionKeyGen",
+          "id": 106
+        },
+        "respConnectionKeyGen": {
+          "type": "RespConnectionKeyGen",
+          "id": 107
+        },
+        "cmdSerialNumberGet": {
+          "type": "CmdSerialNumberGet",
+          "id": 108
+        },
+        "respSerialNumberGet": {
+          "type": "RespSerialNumberGet",
+          "id": 109
+        },
+        "cmdProductionDateGet": {
+          "type": "CmdProductionDateGet",
+          "id": 110
+        },
+        "respProductionDateGet": {
+          "type": "RespProductionDateGet",
+          "id": 111
+        },
+        "cmdHardwareVersionGet": {
+          "type": "CmdHardwareVersionGet",
+          "id": 112
+        },
+        "respHardwareVersionGet": {
+          "type": "RespHardwareVersionGet",
+          "id": 113
+        },
+        "cmdPcbaVersionGet": {
+          "type": "CmdPcbaVersionGet",
+          "id": 114
+        },
+        "respPcbaVersionGet": {
+          "type": "RespPcbaVersionGet",
+          "id": 115
+        },
+        "cmdModelGet": {
+          "type": "CmdModelGet",
+          "id": 116
+        },
+        "respModelGet": {
+          "type": "RespModelGet",
+          "id": 117
+        },
+        "cmdTermsSet": {
+          "type": "CmdTermsSet",
+          "id": 118
+        },
+        "respTermsSet": {
+          "type": "RespTermsSet",
+          "id": 119
+        },
+        "cmdTermsGet": {
+          "type": "CmdTermsGet",
+          "id": 120
+        },
+        "respTermsGet": {
+          "type": "RespTermsGet",
+          "id": 121
+        },
+        "cmdFirmwareVersionGet": {
+          "type": "CmdFirmwareVersionGet",
+          "id": 122
+        },
+        "respFirmwareVersionGet": {
+          "type": "RespFirmwareVersionGet",
+          "id": 123
+        },
+        "cmdWifiStaMacGet": {
+          "type": "CmdWifiStaMacGet",
+          "id": 124
+        },
+        "respWifiStaMacGet": {
+          "type": "RespWifiStaMacGet",
+          "id": 125
+        },
+        "cmdWifiStaIpGet": {
+          "type": "CmdWifiStaIpGet",
+          "id": 126
+        },
+        "respWifiStaIpGet": {
+          "type": "RespWifiStaIpGet",
+          "id": 127
+        },
+        "cmdPing": {
+          "type": "CmdPing",
+          "id": 128
+        },
+        "respPing": {
+          "type": "RespPing",
+          "id": 129
+        },
+        "cmdEioConnect": {
+          "type": "CmdEIOConnect",
+          "id": 130
+        },
+        "respEioConnect": {
+          "type": "RespEIOConnect",
+          "id": 131
+        },
+        "cmdConfigWifiSsidGet": {
+          "type": "CmdConfigWifiSsidGet",
+          "id": 132
+        },
+        "respConfigWifiSsidGet": {
+          "type": "RespConfigWifiSsidGet",
+          "id": 133
+        }
+      }
+    }
+  }
+}

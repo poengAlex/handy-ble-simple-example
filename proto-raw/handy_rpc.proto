@@ -1,0 +1,450 @@
+
+syntax = "proto3";
+package hdyRpc;
+
+/*
+    Consepts
+    - All commands are sent as a request and a response
+    - All commands should have a response
+    - All commands should have a unique ID for response
+    - All responses should have a result code
+    - All responses should match the request ID
+*/
+
+enum ResultCodes{
+    RESULT_UNKNOWN = 0; //Must be there since enum starts with 0
+    RESULT_OK = 1;
+    RESULT_OK_ALREADY_SET = 2;
+    RESULT_ERR_GENERIC = -1;
+    RESULT_ERR_NO_MEMORY = -2;
+    RESULT_ERR_INVALID_ARG = -3;
+    RESULT_ERR_INVALID_STATE = -4;
+    RESULT_ERR_INVALID_SIZE = -5;
+    RESULT_ERR_NOT_FOUND = -6;
+    RESULT_ERR_NOT_SUPPORTED = -7;
+    RESULT_ERR_TIMEOUT = -8;
+    RESULT_ERR_INVALID_RESPONSE = -9;
+}
+
+enum Modes{
+    MODE_HAMP = 0;
+    MODE_HDSP = 1;
+    MODE_HSSP = 2;
+    MODE_MAINTENANCE = 3;
+}
+
+enum HampStates{
+    HAMP_STATE_STOPPED = 0;
+    HAMP_STATE_RUNNING = 1;
+}
+/************TO SERVER - NOT PUBLIC - 100-299************/
+
+//NOTHING HERE SO FAR
+
+/************TO SERVER - PUBLIC - 300-499************/
+//300
+message RequestCmdGetServerTime {
+} 
+message ResponseCmdGetServerTime {
+    uint64 time = 1;
+}
+
+/************TO HANDY - NOT PUBLIC - 500-699************/
+
+//500
+message RequestCmdWsHandshake{
+    string test = 1;    
+}
+message ResponseCmdWsHandshake{
+    string testResult = 1;
+}
+
+//501
+message RequestCmdGenerateConnectionKey{
+    uint32 length = 1;
+}
+message ResponseCmdGenerateConnectionKey{
+    ResultCodes result = 1;
+    string key = 2;
+}
+//502
+message RequestCmdSetConnectionKey{
+    string key = 1;
+}
+message ResponseCmdSetConnectionKey{
+    ResultCodes result = 1;
+}
+
+
+
+
+/************TO HANDY - PUBLIC - 700++ ************/
+//700
+message RequestCmdGetMode{
+}
+message ResponseCmdGetMode{
+    ResultCodes result = 1;
+    Modes mode = 2;
+}
+
+//701
+message RequestCmdSetMode{
+    Modes mode = 1;
+}
+message ResponseCmdSetMode{
+    ResultCodes result = 1;
+}
+
+//702
+message RequestCmdGetConnected{
+}
+message ResponseCmdGetConnected{
+    ResultCodes result = 1;
+    bool connected = 2;
+}
+
+//703
+message RequestCmdGetInfo{
+}
+message ResponseCmdGetInfo{
+    ResultCodes result = 1;
+    string info = 2; //TODO: Define what this is
+}
+
+//704
+message RequestCmdGetSettings{
+}
+message ResponseCmdGetSettings{
+    ResultCodes result = 1;
+    string settings = 2; //TODO: Define what this is
+}
+
+//705
+message RequestCmdGetStatus{
+}
+message ResponseCmdGetStatus{
+    ResultCodes result = 1;
+    string status = 2; //TODO: Define what this is
+}
+
+//720
+message RequestCmdHampSetStart{
+}
+message ResponseCmdHampSetStart{
+    ResultCodes result = 1;
+}
+
+//721
+message RequestCmdHampSetStop{
+}
+message ResponseCmdHampSetStop{
+    ResultCodes result = 1;
+}
+
+//722
+message RequestCmdHampGetVelocity{
+}
+message ResponseCmdHampGetVelocity{
+    ResultCodes result = 1;
+    float velocity = 2;
+}
+
+//723
+message RequestCmdHampSetVelocity{
+    float velocity = 1;
+}
+message ResponseCmdHampSetVelocity{
+    ResultCodes result = 1;
+}
+
+//724
+message RequestCmdHampGetState{
+}
+message ResponseCmdHampGetState{
+    ResultCodes result = 1;
+    HampStates state = 2;
+}
+
+//740
+message RequestCmdHdspSetXaVa{
+    float x = 1;
+    float v = 2;
+}
+message ResponseCmdHdspSetXaVa{
+    ResultCodes result = 1;
+}
+
+//741
+message RequestCmdHdspSetXpVa{
+    float x = 1;
+    float v = 2;
+}
+message ResponseCmdHdspSetXpVa{
+    ResultCodes result = 1;
+}
+
+//742
+message RequestCmdHdspSetXpVp{
+    float x = 1;
+    float v = 2;
+}
+message ResponseCmdHdspSetXpVp{
+    ResultCodes result = 1;
+}
+
+//743
+message RequestCmdHdspSetXaT{
+    float x = 1;
+    uint32 t = 2;
+}
+message ResponseCmdHdspSetXaT{
+    ResultCodes result = 1;
+}
+
+//744
+message RequestCmdHdspSetXpT{
+    float x = 1;
+    uint32 t = 2;
+}
+message ResponseCmdHdspSetXpT{
+    ResultCodes result = 1;
+}
+
+//745
+message RequestCmdHdspSetXaVp{
+    float x = 1;
+    float v = 2;
+}
+message ResponseCmdHdspSetXaVp{
+    ResultCodes result = 1;
+}
+
+//780
+message RequestCmdHstpGetTime{
+    uint64 time = 1;
+}
+message ResponseCmdHstpGetTime{
+    ResultCodes result = 1;
+    uint64 time = 2;
+}
+
+//781
+message RequestCmdHstpGetOffset{
+    sint32 offset = 1;
+}
+message ResponseCmdHstpGetOffset{
+    ResultCodes result = 1;
+    sint32 offset = 2;
+}
+
+//782
+message RequestCmdHstpSetOffset{
+    sint32 offset = 1;
+}
+message ResponseCmdHstpSetOffset{
+    ResultCodes result = 1;
+}
+
+//783
+message RequestCmdHstpGetRtd{
+}
+message ResponseCmdHstpGetRtd{
+    ResultCodes result = 1;
+    uint32 rtd = 2;
+}
+
+//784
+message RequestCmdHstpSetSync{
+    uint32 syncCount = 1;
+    uint32 outliers = 2;
+}
+message ResponseCmdHstpSetSync{
+    ResultCodes result = 1;
+    uint64 time = 2;
+    uint32 rtd = 3;
+}
+
+//800
+message RequestCmdMaintanceSetRestart{
+    bool reconnect = 1;
+}
+message ResponseCmdMaintanceSetRestart{
+    ResultCodes result = 1;
+}
+
+//801
+message RequestCmdMaintanceSetUpdatePerform{
+    string fwVersion = 1;
+}
+message ResponseCmdMaintanceSetUpdatePerform{
+    ResultCodes result = 1;
+}
+
+//802
+message RequestCmdMaintanceGetUpdateStatus{
+}
+message ResponseCmdMaintanceGetUpdateStatus{
+    ResultCodes result = 1;
+    uint32 percentComplete = 2;
+}
+
+//820
+message RequestCmdOtaGetLatest{
+}
+message ResponseCmdOtaGetLatest{
+    ResultCodes result = 1;
+    string version = 2;
+}
+
+//840
+message RequestCmdStrokeGetStroke{
+}
+message ResponseCmdStrokeGetStroke{
+    ResultCodes result = 1;
+    uint32 min = 2;
+    uint32 max = 3;
+}
+
+//841
+message RequestCmdStrokeSetStroke{
+    uint32 min = 1;
+    uint32 max = 2;
+}
+message ResponseCmdStrokeSetStroke{
+    ResultCodes result = 1;
+}
+
+//842
+message RequestCmdStrokeGetPositionAbsolute{
+}
+message ResponseCmdStrokeGetPositionAbsolute{
+    ResultCodes result = 1;
+    float position = 2;
+}
+
+//843
+message RequestCmdStrokeGetPositionRelative{
+}
+message ResponseCmdStrokeGetPositionRelative{
+    ResultCodes result = 1;
+    float position = 2;
+}
+
+
+
+
+enum RequestMethods{
+    REQUEST_METHOD_UNKNOWN = 0; //Must be there since enum starts with 0
+    //Server methods hidden from public starts with 100
+
+    //Server methods that are public starts with 300
+    REQUEST_METHOD_GET_SERVER_TIME = 300;
+
+    //Client hidden requests starts with 500
+    REQUEST_METHOD_WS_HANDSHAKE = 500;
+    REQUEST_METHOD_GENERATE_CONNECTION_KEY = 501;
+    REQUEST_METHOD_SET_CONNECTION_KEY = 502;
+    
+    //client public requests starts at 700 - Each "mode" has 20 slots
+    //BASE
+    REQUEST_METHOD_GET_MODE = 700;
+    REQUEST_METHOD_SET_MODE = 701;
+    REQUEST_METHOD_GET_CONNECTED = 702;
+    REQUEST_METHOD_GET_INFO = 703;
+    REQUEST_METHOD_GET_SETTINGS = 704;
+    REQUEST_METHOD_GET_STATUS = 705;
+    //HAMP
+    REQUEST_METHOD_HAMP_SET_START = 720;
+    REQUEST_METHOD_HAMP_SET_STOP = 721;
+    REQUEST_METHOD_HAMP_GET_VELOCITY = 722;
+    REQUEST_METHOD_HAMP_SET_VELOCITY = 723;
+    REQUEST_METHOD_HAMP_GET_STATE = 724;
+    //HDSP
+    REQUEST_METHOD_HDSP_SET_XAVA = 740;
+    REQUEST_METHOD_HDSP_SET_XPVA = 741;
+    REQUEST_METHOD_HDSP_SET_XPVP = 742;
+    REQUEST_METHOD_HDSP_SET_XAT = 743;
+    REQUEST_METHOD_HDSP_SET_XPT = 744;
+    REQUEST_METHOD_HDSP_SET_XAVP = 745; //NB! Not in current API
+    //HSSP
+    //TBD!
+    //HSTP
+    REQUEST_METHOD_HSTP_GET_TIME = 780;
+    REQUEST_METHOD_HSTP_GET_OFFSET = 781;
+    REQUEST_METHOD_HSTP_SET_OFFSET = 782;
+    REQUEST_METHOD_HSTP_GET_RTD = 783;
+    REQUEST_METHOD_HSTP_SET_SYNC = 784;
+    //MAINTENANCE
+    REQUEST_METHOD_MAINTENANCE_SET_RESTART = 800;
+    REQUEST_METHOD_MAINTENANCE_SET_UPDATE_PERFORM = 801;
+    REQUEST_METHOD_MAINTENANCE_SET_UPDATE_STATUS = 802;
+    //OTA
+    REQUEST_METHOD_OTA_GET_LATEST = 820;
+    //SLIDE->NB Renamed to STROKE
+    REQUEST_METHOD_STROKE_GET_STROKE = 840;
+    REQUEST_METHOD_STROKE_SET_STROKE = 841;
+    REQUEST_METHOD_STROKE_GET_STROKE_POSITION_ABSOLUTE = 842;
+    REQUEST_METHOD_STROKE_GET_STROKE_POSITION_RELATIVE = 843; //NOT IN API
+}
+
+message Request {
+    RequestMethods method = 1;
+    oneof params {
+        //Server methods hidden from public starts with 100
+
+        //Server methods that are public starts with 300
+        RequestCmdGetServerTime requestCmdGetServerTime = 300;
+
+        //Client hidden requests starts with 500
+        RequestCmdWsHandshake requestCmdWsHandshake = 500;
+        RequestCmdGenerateConnectionKey requestCmdGenerateConnectionKey = 501;
+        RequestCmdSetConnectionKey requestCmdSetConnectionKey = 502;
+        
+
+        //client public requests starts at 700
+
+        RequestCmdStrokeGetStroke requestCmdStrokeGetStroke = 840;
+
+    }
+    uint32 id = 2;
+}
+
+message Error {
+    uint32 code = 1;
+    string message = 2;
+    string data = 3;
+}
+
+message Response {
+    uint32 id = 1;
+    oneof result {
+        //Server Response hidden from public starts with 100
+
+        //Server Response that are public starts with 300
+        ResponseCmdGetServerTime responseCmdGetServerTime = 300;
+
+        //Client hidden responses starts with 500
+        ResponseCmdWsHandshake responseCmdWsHandshake = 500;
+        ResponseCmdGenerateConnectionKey responseCmdGenerateConnectionKey = 501;
+        ResponseCmdSetConnectionKey responseCmdSetConnectionKey = 502;
+        
+
+        //client public responses starts at 700
+        ResponseCmdStrokeGetStroke responseCmdStrokeGetStroke = 840;
+    }
+    Error error = 2;
+}
+
+enum MessageType{
+    MESSAGE_TYPE_UNKNOWN = 0; //Must be there since enum starts with 0
+    MESSAGE_TYPE_REQUEST = 1;
+    MESSAGE_TYPE_RESPONSE = 2;
+}
+
+message RpcMessage{
+    MessageType type = 1;
+    oneof message {
+        Request request = 2;
+        Response response = 3;
+    }
+}

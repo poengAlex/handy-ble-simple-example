@@ -1,0 +1,225 @@
+/**
+ * TODO:
+ * - ProtocolVersionGet is likely redundant, as the endpoint "proto-ver" can be used for such purpose too.
+ * - ConnectionKeySet is disabled as in the current firmware we can't do so.
+ * - "Status" from "constants.proto" could be useless. Test and if not necessary remove.
+ */
+
+syntax = "proto3";
+
+message CmdProtocolVersionGet {
+}
+
+message RespProtocolVersionGet {
+    int32 result = 1;
+    string semver = 2;
+}
+
+message CmdConnectionKeyGet {
+}
+
+message RespConnectionKeyGet {
+    int32 result = 1;
+    string key = 2;
+}
+
+// message CmdConnectionKeySet {
+//     string key = 1;
+// }
+
+// message RespConnectionKeySet {
+//     int32 result = 1;
+// }
+
+message CmdConnectionKeyGen {
+    uint32 length = 1;
+}
+
+message RespConnectionKeyGen {
+    int32 result = 1;
+    string key = 2;
+}
+
+message CmdSerialNumberGet {
+}
+
+message RespSerialNumberGet {
+    int32 result = 1;
+    uint32 serialNumber = 2;
+}
+
+message CmdProductionDateGet {
+}
+
+message RespProductionDateGet {
+    int32 result = 1;
+    string productionDate = 2;
+}
+
+message CmdHardwareVersionGet {
+}
+
+message RespHardwareVersionGet {
+    int32 result = 1;
+    uint32 hardwareVersion = 2;
+}
+
+message CmdPcbaVersionGet {
+}
+
+message RespPcbaVersionGet {
+    int32 result = 1;
+    string PcbaVersion = 2;
+}
+
+message CmdModelGet {
+}
+
+message RespModelGet {
+    int32 result = 1;
+    string model = 2;
+}
+
+message CmdTermsSet {
+    uint32 terms_bits = 1;
+}
+
+message RespTermsSet {
+    int32 result = 1;
+}
+
+message CmdTermsGet {
+}
+
+message RespTermsGet {
+    int32 result = 1;
+    uint32 terms_bits = 2;
+}
+
+message CmdFirmwareVersionGet {
+}
+
+message RespFirmwareVersionGet {
+    int32 result = 1;
+    string semver = 2;
+}
+
+message CmdWifiStaMacGet {
+}
+
+message RespWifiStaMacGet {
+    int32 result = 1;
+    string mac = 2;
+}
+
+message CmdWifiStaIpGet {
+}
+
+message RespWifiStaIpGet {
+    int32 result = 1;
+    string ip = 2;
+}
+
+message CmdPing {
+}
+
+message RespPing {
+}
+
+message CmdEIOConnect {
+}
+
+message RespEIOConnect {
+    int32 result = 1;
+}
+
+message CmdConfigWifiSsidGet {
+}
+
+message RespConfigWifiSsidGet {
+    int32 result = 1;
+    string ssid = 2;
+}
+
+enum HdyMsgType {
+    TypeCmdProtocolVersionGet = 0;
+    TypeRespProtocolVersionGet = 1;
+    TypeCmdConnectionKeyGet = 2;
+    TypeRespConnectionKeyGet = 3;
+    // TypeCmdConnectionKeySet = 4;
+    // TypeRespConnectionKeySet = 5;
+    TypeCmdConnectionKeyGen = 6;
+    TypeRespConnectionKeyGen = 7;
+    TypeCmdSerialNumberGet = 8;
+    TypeRespSerialNumberGet = 9;
+    TypeCmdProductionDateGet = 10;
+    TypeRespProductionDateGet = 11;
+    TypeCmdHardwareVersionGet = 12;
+    TypeRespHardwareVersionGet = 13;
+    TypeCmdPcbaVersionGet = 14;
+    TypeRespPcbaVersionGet = 15;
+    TypeCmdModelGet = 16;
+    TypeRespModelGet = 17;
+    TypeCmdTermsSet = 18;
+    TypeRespTermsSet = 19;
+    TypeCmdTermsGet = 20;
+    TypeRespTermsGet = 21;
+    TypeCmdFirmwareVersionGet = 22;
+    TypeRespFirmwareVersionGet = 23;
+    TypeCmdWifiStaMacGet = 24;
+    TypeRespWifiStaMacGet = 25;
+    TypeCmdWifiStaIpGet = 26;
+    TypeRespWifiStaIpGet = 27;
+    TypeCmdPing = 28;
+    TypeRespPing = 29;
+    TypeCmdEIOConnect = 30;
+    TypeRespEIOConnect = 31;
+    TypeCmdConfigWifiSsidGet = 32;
+    TypeRespConfigWifiSsidGet = 33;
+}
+
+message HdyPayload {
+    HdyMsgType msg = 1;
+    oneof payload {
+        CmdProtocolVersionGet cmd_protocol_version_get = 100;
+        RespProtocolVersionGet resp_protocol_version_get = 101;
+        CmdConnectionKeyGet cmd_connection_key_get = 102;
+        RespConnectionKeyGet resp_connection_key_get = 103;
+        // CmdConnectionKeySet cmd_connection_key_set = 104;
+        // RespConnectionKeySet resp_connection_key_set = 105;
+        CmdConnectionKeyGen cmd_connection_key_gen = 106;
+        RespConnectionKeyGen resp_connection_key_gen = 107;
+        CmdSerialNumberGet cmd_serial_number_get = 108;
+        RespSerialNumberGet resp_serial_number_get = 109;
+        CmdProductionDateGet cmd_production_date_get = 110;
+        RespProductionDateGet resp_production_date_get = 111;
+        CmdHardwareVersionGet cmd_hardware_version_get = 112;
+        RespHardwareVersionGet resp_hardware_version_get = 113;
+        CmdPcbaVersionGet cmd_pcba_version_get = 114;
+        RespPcbaVersionGet resp_pcba_version_get = 115;
+        CmdModelGet cmd_model_get = 116;
+        RespModelGet resp_model_get = 117;
+        CmdTermsSet cmd_terms_set = 118;
+        RespTermsSet resp_terms_set = 119;
+        CmdTermsGet cmd_terms_get = 120;
+        RespTermsGet resp_terms_get = 121;
+        CmdFirmwareVersionGet cmd_firmware_version_get = 122;
+        RespFirmwareVersionGet resp_firmware_version_get = 123;
+        CmdWifiStaMacGet cmd_wifi_sta_mac_get = 124;
+        RespWifiStaMacGet resp_wifi_sta_mac_get = 125;
+        CmdWifiStaIpGet cmd_wifi_sta_ip_get = 126;
+        RespWifiStaIpGet resp_wifi_sta_ip_get = 127;
+        CmdPing cmd_ping = 128;
+        RespPing resp_ping = 129;
+        CmdEIOConnect cmd_eio_connect = 130;
+        RespEIOConnect resp_eio_connect = 131;
+        CmdConfigWifiSsidGet cmd_config_wifi_ssid_get = 132;
+        RespConfigWifiSsidGet resp_config_wifi_ssid_get = 133;
+    }
+}
+
+/* TODO: Shall we try to use services? They seem a bit experimental by reading the protoc-c documentation */
+// service Wifi {
+//     rpc StaIpGet(CmdWifiStaIpGet) returns (RespWifiStaIpGet);
+// }
+  

@@ -1,0 +1,50 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLE example</title>
+</head>
+
+<body>
+    <h1>Simple Handy BLE example</h1>
+    <p>Example on how to control Handy with BLE using webBLE and Protobuf.</p>
+    <div>
+        <button onclick="startAll()">Connect All - DEBUG</button>
+    </div>
+    <div>
+        <p>Step 1 - Connect to BLE</p>
+        <button onclick="window.handy.connectBle()">Connect</button>
+        <p>Step 2 - Connect to GATT</p>
+        <button onclick="window.handy.connectGatt()">Connect GATT</button>
+        <p>Step 3 - Start session - NOT NEEDED IN LATEST FW</p>
+        <button onclick="window.handy.startSession()">Start session</button>
+        <p>Step 4 - Start Handyplug session</p>
+        <button onclick="window.handy.startHandyplugSession()">Start Handyplug session</button>
+        <p>Step 5 - Send commands</p>
+        <button onclick="window.handy.sendLinearCmd(0, 1000)">Linear 0, 1000ms</button>
+        <button onclick="window.handy.sendLinearCmd(1000, 500)">Linear 100, 500ms</button>
+    </div>
+</body>
+<script src="main.js"></script>
+<script>
+    function test() {
+        console.log("test", window.handy);
+    }
+
+    async function startAll() {
+        console.log("connectBle", window.handy);
+        await window.handy.connectBle();
+        await window.handy.connectGatt();
+        await window.handy.startSession();
+        await window.handy.startHandyplugSession()
+    }
+
+    function sendLinearCommand(position, duration) {
+        window.handy.sendLinearCmd(position, duration);
+    }
+
+</script>
+
+</html>
