@@ -6,9 +6,24 @@ This is a simple example on how to use BLE in in your JS/TS projects
 
 Handy uses Protobuf to communicate. The compiled protobuf code can be found in this project.
 
-TS: proto-ts - requires protobufjs
-Node/commonJS: proto-commonJS
-Vanilla: dist/bundle.js
+## TS
+
+folder: proto-ts
+nb! requires protobufjs
+
+## Node/commonJS:
+
+Folder: proto-commonjs
+
+### Changes from src/index.js
+
+- Include espressif and handyplug from **proto-commonjs** folder
+- Do not require lodash
+- Change the webBLE to other BLE implantation
+
+## Vanilla
+
+dist/bundle.js
 
 # Functions
 
